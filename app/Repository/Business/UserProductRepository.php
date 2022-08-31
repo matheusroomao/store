@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class UserProductRepository extends AbstractRepository implements UserProductInterface
 {
     private $model = UserProduct::class;
-    private $relationships = ['product','user'];
+    private $relationships = ['product', 'user'];
     private $dependences = [];
     private $unique = [];
     private $message = null;
@@ -29,9 +29,8 @@ class UserProductRepository extends AbstractRepository implements UserProductInt
     {
         $models = $this->model->query()->with($this->relationships);
 
-        if(auth()->user()->type != "ADMIN"){
-            $models = $this->model->query()->with($this->relationships)->where('user_id',auth()->user()->id);
-
+        if (auth()->user()->type != "ADMIN") {
+            $models = $this->model->query()->with($this->relationships)->where('user_id', auth()->user()->id);
         }
 
         if ($request->exists('search')) {
@@ -45,17 +44,23 @@ class UserProductRepository extends AbstractRepository implements UserProductInt
         return $models;
     }
 
-    
+
     public function save(Request $request)
     {
-        $model = new $this->model();
-        $model->product_id = $request->product_id; 
-        $model->status = "NOVO";
-        $model->user_id = Auth::user()->id;
-        $model->save();
+        $product = Product::find($request->product_id);
+        if ($product->quantyty >= 1) {
+            $model = new $this->model();
+            $model->product_id = $request->product_id;
+            $model->status = "NOVO";
+            $model->user_id = Auth::user()->id;
 
-        $this->setMessage('Compra efetuada com sucesso.', 'success');
-        return $model;
+            $product->quantyty = $product->quantyty - 1;
+            $product->save();
+            $model->save();
+            $this->setMessage('Compra efetuada com sucesso.', 'success');
+            return $model;
+        }
+        $this->setMessage('O produto não está disponível.', 'error');
+        return null;
     }
 }
-
