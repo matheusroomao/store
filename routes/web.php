@@ -22,15 +22,16 @@ Route::get('/entrar', [App\Http\Controllers\AuthController::class, 'showLogin'])
 Route::get('/logout', [App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [App\Http\Controllers\AuthController::class, 'login'])->name('admin.login');
 
-Route::get('/produtos/{id}', [App\Http\Controllers\Admin\ProductController::class, 'show'])->name('admin.product.show');
 
 
 Route::group(['middleware' => 'admin'], function () {
     Route::resource('usuarios', App\Http\Controllers\Admin\UserController::class)->names('admin.user');
     Route::resource('marcas', App\Http\Controllers\Admin\BrandController::class)->names('admin.brand');
     Route::resource('produtos', App\Http\Controllers\Admin\ProductController::class)->names('admin.product');
-    Route::resource('/compras', App\Http\Controllers\Admin\UserProductController::class)->names('admin.user.product');
+    Route::resource('compras', App\Http\Controllers\Admin\UserProductController::class)->names('admin.user.product');
 });
+Route::get('/produtos/{id}', [App\Http\Controllers\Admin\ProductController::class, 'show'])->name('admin.product.show');
+
 Route::get('/compras', [App\Http\Controllers\Admin\UserProductController::class,'index'])->name('admin.user.product.index');
 Route::get('/produtos', [App\Http\Controllers\Admin\ProductController::class, 'index'])->name('admin.product.index');
 Route::post('/comprar/', [App\Http\Controllers\Admin\UserProductController::class, 'store'])->name('admin.user.product.store');
