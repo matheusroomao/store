@@ -30,7 +30,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::resource('produtos', App\Http\Controllers\Admin\ProductController::class)->names('admin.product');
     Route::resource('compras', App\Http\Controllers\Admin\UserProductController::class)->names('admin.user.product');
 });
-Route::get('/produtos/{id}', [App\Http\Controllers\Admin\ProductController::class, 'show'])->name('admin.product.show');
+Route::get('produto/{id}', [App\Http\Controllers\Admin\ProductController::class, 'show'])->name('admin.product.view');
 
 Route::get('/compras', [App\Http\Controllers\Admin\UserProductController::class,'index'])->name('admin.user.product.index');
 Route::get('/produtos', [App\Http\Controllers\Admin\ProductController::class, 'index'])->name('admin.product.index');

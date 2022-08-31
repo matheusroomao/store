@@ -31,8 +31,8 @@ class Product extends Model
         return $this->belongsTo(Brand::class);
     }
 
-    public function userProduct()
+    public function userProducts()
     {
-        return $this->hasOne(UserProduct::class);
+        return $this->hasMany(UserProduct::class);
     }
 }

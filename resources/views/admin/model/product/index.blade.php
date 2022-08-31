@@ -60,7 +60,7 @@
 
                 <div class="col d-flex justify-content-end">
                     <div>
-                        <a href="{{ route('admin.product.show',$model->id) }}" class="btn btn-default">
+                        <a href="{{ route('admin.product.view',$model->id) }}" class="btn btn-default">
                             <i class="bi bi-eye-fill"></i>
                         </a>
                         @if(auth()->user()->type == 'ADMIN')

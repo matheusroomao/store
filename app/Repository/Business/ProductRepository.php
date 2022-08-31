@@ -10,7 +10,7 @@ class ProductRepository extends AbstractRepository implements ProductInterface
 {
     private $model = Product::class;
     private $relationships = ['brand'];
-    private $dependences = ['userProduct'];
+    private $dependences = ['userProducts'];
     private $unique = [];
     private $message = null;
     private $order = 'name';
